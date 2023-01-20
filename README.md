@@ -1,3 +1,34 @@
+#### time
+
+# Requirements
+
+#### List View:
+
+🍺 The application has a main interface/page which shows a list of beers withbasic details like name, tagline, image, and abv value.
+🚧 The list should be paginated, and should support basic page navigation to see more beer options.
+
+#### Search:
+
+🍺 The main page also supports searchable interface, where users can search
+for a particular beer by name.
+
+#### Detail View:
+
+🍺 When a user clicks on a particular beer item, they should end up on a beer detail view, where we display detailed information about a beer. Here, feel free to add more details you will like to see apart from the basic ones.
+
+## Bonus Points
+
+To extend search functionality, implement ABV filters which show a list of beers
+depending upon ABV value being lower or higher than a value chosen by the user.
+(Hint: API supports ABV value specs (abv_gt, abv_lt))
+Support autocomplete in search interface, displaying a list of beers based on search-text entered by the user.
+Whenever a user searches for a particular beer using search and filters, they want to share the results with their friends. Support query friendly URLs.
+Mobile Responsiveness.
+Implement component unit tests.
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
