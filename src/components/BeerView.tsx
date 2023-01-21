@@ -12,12 +12,11 @@ interface IBeerViewProps {
 export default function BeerView(props: IBeerViewProps): JSX.Element {
   const { beer, onClick } = props;
   return (
-    <button onClick={onClick}>
+    <button className="beer-view" onClick={onClick}>
       <p>{beer.name}</p>
       <p>{beer.tagline}</p>
       <img src={beer.image_url} alt="" />
       <p>ABV: {beer.abv}</p>
-      {/* https://en.wikipedia.org/wiki/Alcohol_by_volume */}
     </button>
   );
 }

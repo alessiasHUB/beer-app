@@ -7,9 +7,8 @@ interface IDetailBeerProps {
 
 export default function DetailBeerView(props: IDetailBeerProps): JSX.Element {
   const { beer, onClick } = props;
-  console.log(beer.name);
   return (
-    <div>
+    <div className="detailed-view">
       <p>{beer.name}</p>
       <p>{beer.tagline}</p>
       <img src={beer.image_url} alt="" />
@@ -18,13 +17,13 @@ export default function DetailBeerView(props: IDetailBeerProps): JSX.Element {
       <p>
         {beer.food_pairing.map((el, i) => {
           return i !== beer.food_pairing.length - 1 ? (
-            <span>{el} / </span>
+            <span key={i}>{el} / </span>
           ) : (
-            <span>{el}</span>
+            <span key={i}>{el}</span>
           );
         })}
       </p>
-      <button onClick={onClick}>BACK</button>
+      <button onClick={onClick}>CLOSE</button>
     </div>
   );
 }
