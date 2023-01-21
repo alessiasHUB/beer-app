@@ -13,10 +13,11 @@ export default function BeerView(props: IBeerViewProps): JSX.Element {
   const { beer, onClick } = props;
   return (
     <button className="beer-view" onClick={onClick}>
-      <p>{beer.name}</p>
-      <p>{beer.tagline}</p>
+      <h4>
+        {beer.name} | {beer.abv}%
+      </h4>
       <img src={beer.image_url} alt="" />
-      <p>ABV: {beer.abv}</p>
+      <p>{beer.tagline}</p>
     </button>
   );
 }

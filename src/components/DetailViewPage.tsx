@@ -9,10 +9,12 @@ export default function DetailBeerView(props: IDetailBeerProps): JSX.Element {
   const { beer, onClick } = props;
   return (
     <div className="detailed-view">
-      <p>{beer.name}</p>
+      <p>
+        {beer.name} | {beer.abv}%
+      </p>
       <p>{beer.tagline}</p>
       <img src={beer.image_url} alt="" />
-      <p>{beer.abv}</p>
+
       <p>{beer.description}</p>
       <p>
         {beer.food_pairing.map((el, i) => {
