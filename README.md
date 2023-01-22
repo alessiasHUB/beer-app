@@ -1,10 +1,10 @@
 # Beer App | tech test
 
-##### 🔗deployed on netlify: [link](https://beer-apparatus.netlify.app/)
+##### 🔗deployed on netlify: [link](https://beer-apparatus.netlify.app/)  
 
-🍺 implemented functionality
-🚧 under construction functionality
-🙅 not attempted functionality
+🍺 implemented functionality  
+🚧 under construction functionality  
+🙅 not attempted functionality  
 
 #### ⏱Time
 
@@ -28,18 +28,17 @@ CSS: roughly 1hr
 
 ### 🎁Bonus Points
 
-🍺 To extend search functionality, implement ABV filters which show a list of beers
-depending upon ABV value being lower or higher than a value chosen by the user.
-🙅 Support autocomplete in search interface, displaying a list of beers based on search-text entered by the user.
-🙅 Whenever a user searches for a particular beer using search and filters, they want to share the results with their friends. Support query friendly URLs.
-🚧 Mobile Responsiveness.
-🚧 Implement component unit tests.
+🍺 To extend search functionality, implement ABV filters which show a list of beers depending upon ABV value being lower or higher than a value chosen by the user.  
+🙅 Support autocomplete in search interface, displaying a list of beers based on search-text entered by the user.  
+🙅 Whenever a user searches for a particular beer using search and filters, they want to share the results with their friends. Support query friendly URLs.  
+🚧 Mobile Responsiveness.  
+🚧 Implement component unit tests.  
 
 ---
 
 #### ⏱ With more time;
 
-I would have looked more into fetching only when needed. I started out fetching one page at a time, but I found this didn't work well for the search bar, as it then only looked through one page, where's I wanted it to be able to look through the whole database. However I think it could possibly be better to only fetch the data when needed so I'd like to explore that route.
+I would have looked more into fetching only when needed. I started out fetching one page at a time, but I found this didn't work well for the search bar, as it then only looked through one page, where's I wanted it to be able to look through the whole database. However I think it could possibly be better to only fetch the data when needed so I'd like to explore that route.  
 I also would've wanted to tackle the rest of the bonus functionality as well as spent more time on the CSS.
 
 ---
