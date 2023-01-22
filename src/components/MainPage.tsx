@@ -115,7 +115,6 @@ export default function MainPage(): JSX.Element {
           />
           Welcome to the Beer App
         </span>
-
         <SearchBar searchQuery={searchInput} onChange={handleSearchInput} />
         <AbvSearch
           searchQuery={abvInput}

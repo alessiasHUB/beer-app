@@ -1,5 +1,4 @@
-// ● Search: The main page also supports searchable interface, where users can search
-// for a particular beer by name.
+import isANum from "./utils/isANum";
 
 interface AbvSearchProps {
   searchQuery: string;
@@ -19,7 +18,7 @@ export default function AbvSearch(props: AbvSearchProps): JSX.Element {
         value={searchQuery}
         onChange={(e) => onChange(e.target.value)}
       />
-      {!Number(searchQuery) && searchQuery === "" ? (
+      {!isANum(searchQuery) || searchQuery === "" ? (
         <div className="abv-search-buttons">
           <button disabled className={"over" + abvBtn}>
             over
