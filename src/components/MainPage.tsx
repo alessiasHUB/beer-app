@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IBeer } from "./utils/interfaces";
 import { searchCriteriaBeers } from "./utils/searchCriteria";
 import { searchAvbBeers } from "./utils/abvSearc";
