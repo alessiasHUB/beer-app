@@ -1,15 +1,15 @@
 # Beer App | tech test
 
-##### 🔗deployed on netlify: [link](https://beer-apparatus.netlify.app/)  
+##### 🔗deployed on netlify: [link](https://beer-apparatus.netlify.app/)
 
 🍺 implemented functionality  
-🚧 under construction functionality  
-🙅 not attempted functionality  
+🚧 under construction
+🙅 not attempted
 
 #### ⏱Time
 
-functionality: 3-4hrs
-CSS: roughly 1hr
+functionality: 4 hrs
+CSS: roughly 1 hr
 
 ### 📜Requirements
 
@@ -32,7 +32,7 @@ CSS: roughly 1hr
 🙅 Support autocomplete in search interface, displaying a list of beers based on search-text entered by the user.  
 🙅 Whenever a user searches for a particular beer using search and filters, they want to share the results with their friends. Support query friendly URLs.  
 🚧 Mobile Responsiveness.  
-🚧 Implement component unit tests.  
+🚧 Implement component unit tests.
 
 ---
 
