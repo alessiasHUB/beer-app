@@ -15,6 +15,7 @@ body {
   font-size: 30px;
 }
 .beer-view {
+  cursor: pointer;
   width: 250px;
   height: 300px;
   margin: 10px;
@@ -24,12 +25,17 @@ body {
   border-color: rgb(213, 170, 95);
   background-color: rgb(249, 240, 218);
   color: black;
+  box-shadow: 3px 3px 1px rgb(245, 226, 164);
 }
 .beer-view:hover {
   border-style: outset;
 }
 .beer-view > img {
   height: 150px;
+}
+.beer-view > p {
+  width: 100%;
+  background-color: rgb(252, 252, 236);
 }
 
 .detailed-view {
@@ -64,6 +70,32 @@ body {
   background-color: rgb(255, 230, 91);
   color: #130a01f6;
   border-color: #130a01f6;
+}
+
+.abv-search > input {
+  width: 30px;
+}
+.overundefined {
+  background-color: white;
+  border-width: 1px;
+  border-radius: 3px;
+}
+.underundefined {
+  background-color: white;
+  border-width: 1px;
+  border-radius: 3px;
+}
+.overover {
+  background-color: rgb(105, 79, 16);
+  border-width: 1px;
+  color: white;
+  border-radius: 3px;
+}
+.underunder {
+  background-color: rgb(105, 79, 16);
+  border-width: 1px;
+  color: white;
+  border-radius: 3px;
 }
 
 .page-btn {

@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { IBeer } from "./utils/interfaces";
 import { searchCriteriaBeers } from "./utils/searchCriteria";
+import { searchAvbBeers } from "./utils/abvSearc";
 import BeerView from "./BeerView";
 import DetailBeerView from "./DetailViewPage";
 import SearchBar from "./SearcBar";
+import AbvSearch from "./AbvSearc";
 import PageButtons from "./PageButtons";
 
-// const apiURL = "https://api.punkapi.com/v2/beers"; //after "/" put the id of the beer
-// const abv_gt = "?abv_gt="; //add number to go after
-// const abv_lt = "?abv_lt="; //add number to go after
+const apiURL = "https://api.punkapi.com/v2/beers"; //after "/" put the id of the beer
 
 const totalPages: number = 13; //if 25 beers per page
 const numBeersPerPage: number = 24;
 export default function MainPage(): JSX.Element {
-  // const [beers, setBeers] = useState<IBeer[]>([]);
   const [allBeers, setAllBeers] = useState<IBeer[]>([]);
   const [selectedBeer, setSelectedBeer] = useState<IBeer | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+  const [abvBtn, setAbvBtn] = useState<undefined | "under" | "over">(undefined);
+  const [abvInput, setAbvInput] = useState<string>("");
 
   //--------------------------------------------------fetching all beers
   useEffect(() => {
@@ -33,10 +34,34 @@ export default function MainPage(): JSX.Element {
     fetchAllData();
   }, []);
 
+  //--------------------------------------------------filter beers depending on their ABV
+  const handleAbvSearchInput = (input: string) => {
+    setAbvInput(input);
+    if (input === "") {
+      setAbvBtn(undefined);
+    }
+  };
+  const handleGreaterBtn = () => {
+    if (abvBtn === "over") {
+      setAbvBtn(undefined);
+    } else {
+      setAbvBtn("over");
+    }
+    setPage(1);
+  };
+  const handleLessBtn = () => {
+    if (abvBtn === "under") {
+      setAbvBtn(undefined);
+    } else {
+      setAbvBtn("under");
+    }
+    setPage(1);
+  };
+
   //--------------------------------------------------displaying one beer in detail when clicked
   const handleBeerSelectorOnClick = (id: number) => {
     async function fetchSelectedData() {
-      const response = await fetch("https://api.punkapi.com/v2/beers/" + id);
+      const response = await fetch(`${apiURL}/${id}`);
       const data = await response.json();
       setSelectedBeer(data[0]);
     }
@@ -53,7 +78,13 @@ export default function MainPage(): JSX.Element {
     setSearchInput(input);
     setPage(1);
   };
-  const filteredBeers: IBeer[] = searchCriteriaBeers(allBeers, searchInput);
+  const filteredBeers: IBeer[] =
+    abvBtn && abvInput !== "" && Number(abvInput)
+      ? searchCriteriaBeers(
+          searchAvbBeers(allBeers, abvInput, abvBtn),
+          searchInput
+        )
+      : searchCriteriaBeers(allBeers, searchInput);
   const filteredBeersRender = filteredBeers
     .slice((page - 1) * numBeersPerPage, page * numBeersPerPage)
     .map((beer: IBeer, index) => {
@@ -85,19 +116,23 @@ export default function MainPage(): JSX.Element {
         </span>
         <span>Welcome to the Beer App</span>
         <SearchBar searchQuery={searchInput} onChange={handleSearchInput} />
+        <AbvSearch
+          searchQuery={abvInput}
+          abvBtn={abvBtn}
+          onChange={handleAbvSearchInput}
+          onGreaterClick={handleGreaterBtn}
+          onLessClick={handleLessBtn}
+        />
       </div>
       <hr />
-
       {selectedBeer && (
         <DetailBeerView
           beer={selectedBeer}
           onClick={() => handleBackButton()}
         />
       )}
-
       {filteredBeersRender}
       <br />
-
       <PageButtons
         page={page}
         numBeersPerPage={numBeersPerPage}
