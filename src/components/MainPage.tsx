@@ -113,8 +113,9 @@ export default function MainPage(): JSX.Element {
             alt="icon"
             src="https://static.vecteezy.com/system/resources/previews/001/201/132/original/beer-png.png"
           />
+          Welcome to the Beer App
         </span>
-        <span>Welcome to the Beer App</span>
+
         <SearchBar searchQuery={searchInput} onChange={handleSearchInput} />
         <AbvSearch
           searchQuery={abvInput}
@@ -124,14 +125,14 @@ export default function MainPage(): JSX.Element {
           onLessClick={handleLessBtn}
         />
       </div>
-      <hr />
+
       {selectedBeer && (
         <DetailBeerView
           beer={selectedBeer}
           onClick={() => handleBackButton()}
         />
       )}
-      {filteredBeersRender}
+      <div className="beers-map">{filteredBeersRender}</div>
       <br />
       <PageButtons
         page={page}

@@ -1,5 +1,8 @@
 #### time
 
+functionality: 3-4hrs
+CSS: roughly 1hr
+
 # Requirements
 
 #### List View:

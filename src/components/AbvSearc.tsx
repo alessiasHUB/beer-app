@@ -15,28 +15,28 @@ export default function AbvSearch(props: AbvSearchProps): JSX.Element {
   return (
     <div className="abv-search">
       <input
-        placeholder="ABV"
+        placeholder="abv%"
         value={searchQuery}
         onChange={(e) => onChange(e.target.value)}
       />
       {!Number(searchQuery) && searchQuery === "" ? (
-        <>
+        <div className="abv-search-buttons">
           <button disabled className={"over" + abvBtn}>
             over
           </button>
           <button disabled className={"under" + abvBtn}>
             under
           </button>
-        </>
+        </div>
       ) : (
-        <>
+        <div className="abv-search-buttons">
           <button onClick={onGreaterClick} className={"over" + abvBtn}>
             over
           </button>
           <button onClick={onLessClick} className={"under" + abvBtn}>
             under
           </button>
-        </>
+        </div>
       )}
     </div>
   );
