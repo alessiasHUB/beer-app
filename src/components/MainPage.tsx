@@ -21,18 +21,20 @@ export default function MainPage(): JSX.Element {
   const [abvBtn, setAbvBtn] = useState<null | "abv_lt" | "abv_gt">(null);
   const [abvInput, setAbvInput] = useState<string>("");
 
-  // todo fix the fetch when search bar
+  // todo: dont re-fetch when I click to get detailed View and the CLOSE btn
+  // todo: fix abvBtn thingy not going to the right link even tho no btn is pressed
   //--------------------------------------------------fetching beers for each page
   useEffect(() => {
     async function fetchData() {
       let link = `${apiURL}?page=${page}&per_page=${numBeersPerPage}`;
-      if (searchInput !== "" && abvInput === "" && !abvBtn) {
-        link = `https://api.punkapi.com/v2/beers?beer_name=${searchInput}&per_page=${page}&page=${numBeersPerPage}`;
-      } else if (abvInput !== "" && abvBtn && searchInput === "") {
-        link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&per_page=${page}&page=${numBeersPerPage}`;
-      } else if (abvInput !== "" && abvBtn && searchInput !== "") {
-        link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&beer_name=${searchInput}&per_page=${page}&page=${numBeersPerPage}`;
+      if (searchInput !== "" && abvInput === "" && abvBtn === null) {
+        link = `https://api.punkapi.com/v2/beers?beer_name=${searchInput}&per_page=${numBeersPerPage}&page=${page}`;
+      } else if (abvInput !== "" && abvBtn !== null && searchInput === "") {
+        link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&per_page=${numBeersPerPage}&page=${page}`;
+      } else if (abvInput !== "" && abvBtn !== null && searchInput !== "") {
+        link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&beer_name=${searchInput}&per_page=${numBeersPerPage}&page=${page}`;
       }
+      console.log(link);
       const response = await fetch(link);
       const data = await response.json();
       setAllBeers(data);
@@ -40,7 +42,7 @@ export default function MainPage(): JSX.Element {
     fetchData();
   }, [page, searchInput, abvBtn, abvInput]);
 
-  console.log("\n", "data: ", allBeers);
+  console.log("all mi beers: ", allBeers.length, "\n");
 
   //--------------------------------------------------page setting
   const handleNextPage = () => {
