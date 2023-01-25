@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IBeer } from "./utils/interfaces";
-import { searchCriteriaBeers } from "./utils/searchCriteria";
-import { searchAvbBeers } from "./utils/abvSearc";
+// import { searchCriteriaBeers } from "./utils/searchCriteria";
+// import { searchAbvBeers } from "./utils/abvSearc";
 import BeerView from "./BeerView";
 import DetailBeerView from "./DetailViewPage";
 import SearchBar from "./SearcBar";
@@ -21,11 +21,12 @@ export default function MainPage(): JSX.Element {
   const [abvBtn, setAbvBtn] = useState<null | "abv_lt" | "abv_gt">(null);
   const [abvInput, setAbvInput] = useState<string>("");
 
+  // todo fix the fetch when search bar
   //--------------------------------------------------fetching beers for each page
   useEffect(() => {
     async function fetchData() {
       let link = `${apiURL}?page=${page}&per_page=${numBeersPerPage}`;
-      if (searchInput !== "" && abvInput === "") {
+      if (searchInput !== "" && abvInput === "" && !abvBtn) {
         link = `https://api.punkapi.com/v2/beers?beer_name=${searchInput}&per_page=${page}&page=${numBeersPerPage}`;
       } else if (abvInput !== "" && abvBtn && searchInput === "") {
         link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&per_page=${page}&page=${numBeersPerPage}`;
@@ -39,7 +40,6 @@ export default function MainPage(): JSX.Element {
     fetchData();
   }, [page, searchInput, abvBtn, abvInput]);
 
-  console.log("page: ", page);
   console.log("\n", "data: ", allBeers);
 
   //--------------------------------------------------page setting
@@ -92,8 +92,13 @@ export default function MainPage(): JSX.Element {
   //--------------------------------------------------search-bar functionalities
   const handleSearchInput = (input: string) => {
     // change out spaces(' ') for underscores ('_')
-    input.split(" ").join("_");
+    if (input.includes(" ")) {
+      input.split(" ").join("_");
+    }
     setSearchInput(input);
+    setPage(1);
+  };
+  const setPageOnChange = () => {
     setPage(1);
   };
 
@@ -118,13 +123,18 @@ export default function MainPage(): JSX.Element {
           />
           Welcome to the Beer App
         </span>
-        <SearchBar searchQuery={searchInput} onChange={handleSearchInput} />
+        <SearchBar
+          searchQuery={searchInput}
+          onChange={handleSearchInput}
+          setPageOnChange={setPageOnChange}
+        />
         <AbvSearch
           searchQuery={abvInput}
           abvBtn={abvBtn}
           onChange={handleAbvSearchInput}
           onGreaterClick={handleGreaterBtn}
           onLessClick={handleLessBtn}
+          setPageOnChange={setPageOnChange}
         />
       </div>
 

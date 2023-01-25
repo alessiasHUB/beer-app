@@ -1,6 +1,6 @@
 import { IBeer } from "./interfaces";
 
-export function searchAvbBeers(
+export function searchAbvBeers(
   beers: IBeer[],
   searchQuery: string,
   setting: "abv_gt" | "abv_lt"

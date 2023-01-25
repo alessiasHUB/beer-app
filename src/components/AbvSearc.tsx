@@ -6,17 +6,28 @@ interface AbvSearchProps {
   onChange: (searchInput: string) => void;
   onGreaterClick: () => void;
   onLessClick: () => void;
+  setPageOnChange: () => void;
 }
 
 export default function AbvSearch(props: AbvSearchProps): JSX.Element {
-  const { searchQuery, onChange, onGreaterClick, onLessClick, abvBtn } = props;
+  const {
+    searchQuery,
+    onChange,
+    onGreaterClick,
+    onLessClick,
+    abvBtn,
+    setPageOnChange,
+  } = props;
 
   return (
     <div className="abv-search">
       <input
         placeholder="abv%"
         value={searchQuery}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          onChange(e.target.value);
+          setPageOnChange();
+        }}
       />
       {!isANum(searchQuery) || searchQuery === "" ? (
         <div className="abv-search-buttons">
