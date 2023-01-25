@@ -9,51 +9,67 @@ import AbvSearch from "./AbvSearc";
 import PageButtons from "./PageButtons";
 
 const apiURL = "https://api.punkapi.com/v2/beers"; //after "/" put the id of the beer
-
-const totalPages: number = 13; //if 25 beers per page
 const numBeersPerPage: number = 24;
+
+// const totalPages: number = 13; //if 25 beers per page
+
 export default function MainPage(): JSX.Element {
   const [allBeers, setAllBeers] = useState<IBeer[]>([]);
   const [selectedBeer, setSelectedBeer] = useState<IBeer | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const [abvBtn, setAbvBtn] = useState<undefined | "under" | "over">(undefined);
+  const [abvBtn, setAbvBtn] = useState<null | "abv_lt" | "abv_gt">(null);
   const [abvInput, setAbvInput] = useState<string>("");
 
-  //--------------------------------------------------fetching all beers
+  //--------------------------------------------------fetching beers for each page
   useEffect(() => {
-    async function fetchAllData() {
-      for (let i = 1; i <= totalPages; i++) {
-        const response = await fetch(
-          `https://api.punkapi.com/v2/beers?page=${i}&per_page=25`
-        );
-        const data = await response.json();
-        setAllBeers((prev) => prev.concat(data));
+    async function fetchData() {
+      let link = `${apiURL}?page=${page}&per_page=${numBeersPerPage}`;
+      if (searchInput !== "" && abvInput === "") {
+        link = `https://api.punkapi.com/v2/beers?beer_name=${searchInput}&per_page=${page}&page=${numBeersPerPage}`;
+      } else if (abvInput !== "" && abvBtn && searchInput === "") {
+        link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&per_page=${page}&page=${numBeersPerPage}`;
+      } else if (abvInput !== "" && abvBtn && searchInput !== "") {
+        link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&beer_name=${searchInput}&per_page=${page}&page=${numBeersPerPage}`;
       }
+      const response = await fetch(link);
+      const data = await response.json();
+      setAllBeers(data);
     }
-    fetchAllData();
-  }, []);
+    fetchData();
+  }, [page, searchInput, abvBtn, abvInput]);
+
+  console.log("page: ", page);
+  console.log("\n", "data: ", allBeers);
+
+  //--------------------------------------------------page setting
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+  const handlePreviousPage = () => {
+    setPage((prevPage) => prevPage - 1);
+  };
 
   //--------------------------------------------------filter beers depending on their ABV
   const handleAbvSearchInput = (input: string) => {
     setAbvInput(input);
     if (input === "") {
-      setAbvBtn(undefined);
+      setAbvBtn(null);
     }
   };
   const handleGreaterBtn = () => {
-    if (abvBtn === "over") {
-      setAbvBtn(undefined);
+    if (abvBtn === "abv_gt") {
+      setAbvBtn(null);
     } else {
-      setAbvBtn("over");
+      setAbvBtn("abv_gt");
     }
     setPage(1);
   };
   const handleLessBtn = () => {
-    if (abvBtn === "under") {
-      setAbvBtn(undefined);
+    if (abvBtn === "abv_lt") {
+      setAbvBtn(null);
     } else {
-      setAbvBtn("under");
+      setAbvBtn("abv_lt");
     }
     setPage(1);
   };
@@ -68,42 +84,29 @@ export default function MainPage(): JSX.Element {
     fetchSelectedData();
   };
 
-  //--------------------------------------------------going back to normal view when clicked
-  const handleBackButton = () => {
+  //--------------------------------------------------going back to normal view (from selectedBeer) when clicked
+  const handleCloseButton = () => {
     setSelectedBeer(null);
   };
 
   //--------------------------------------------------search-bar functionalities
   const handleSearchInput = (input: string) => {
+    // change out spaces(' ') for underscores ('_')
+    input.split(" ").join("_");
     setSearchInput(input);
     setPage(1);
   };
-  const filteredBeers: IBeer[] =
-    abvBtn && abvInput !== "" && Number(abvInput)
-      ? searchCriteriaBeers(
-          searchAvbBeers(allBeers, abvInput, abvBtn),
-          searchInput
-        )
-      : searchCriteriaBeers(allBeers, searchInput);
-  const filteredBeersRender = filteredBeers
-    .slice((page - 1) * numBeersPerPage, page * numBeersPerPage)
-    .map((beer: IBeer, index) => {
-      return (
-        <BeerView
-          key={index}
-          beer={beer}
-          onClick={() => handleBeerSelectorOnClick(beer.id)}
-        />
-      );
-    });
 
-  //--------------------------------------------------page setting
-  const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
-  const handlePreviousPage = () => {
-    setPage((prevPage) => prevPage - 1);
-  };
+  //--------------------------------------------------filters
+  const filteredBeersRender = allBeers.map((beer: IBeer, index) => {
+    return (
+      <BeerView
+        key={index}
+        beer={beer}
+        onClick={() => handleBeerSelectorOnClick(beer.id)}
+      />
+    );
+  });
 
   return (
     <>
@@ -128,7 +131,7 @@ export default function MainPage(): JSX.Element {
       {selectedBeer && (
         <DetailBeerView
           beer={selectedBeer}
-          onClick={() => handleBackButton()}
+          onClick={() => handleCloseButton()}
         />
       )}
       <div className="beers-map">{filteredBeersRender}</div>

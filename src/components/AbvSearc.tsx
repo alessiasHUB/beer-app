@@ -2,7 +2,7 @@ import isANum from "./utils/isANum";
 
 interface AbvSearchProps {
   searchQuery: string;
-  abvBtn: string | undefined;
+  abvBtn: "abv_gt" | "abv_lt" | null;
   onChange: (searchInput: string) => void;
   onGreaterClick: () => void;
   onLessClick: () => void;
@@ -20,19 +20,19 @@ export default function AbvSearch(props: AbvSearchProps): JSX.Element {
       />
       {!isANum(searchQuery) || searchQuery === "" ? (
         <div className="abv-search-buttons">
-          <button disabled className={"over" + abvBtn}>
+          <button disabled className={"abv_gt" + abvBtn}>
             over
           </button>
-          <button disabled className={"under" + abvBtn}>
+          <button disabled className={"abv_lt" + abvBtn}>
             under
           </button>
         </div>
       ) : (
         <div className="abv-search-buttons">
-          <button onClick={onGreaterClick} className={"over" + abvBtn}>
+          <button onClick={onGreaterClick} className={"abv_gt" + abvBtn}>
             over
           </button>
-          <button onClick={onLessClick} className={"under" + abvBtn}>
+          <button onClick={onLessClick} className={"abv_lt" + abvBtn}>
             under
           </button>
         </div>
