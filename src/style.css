@@ -49,26 +49,26 @@ body {
   display: flex;
   flex-direction: column;
 }
-.overundefined {
+.abv_gtnull {
   background-color: white;
   border-width: 1px;
   border-radius: 3px;
   margin: 1px;
 }
-.underundefined {
+.abv_ltnull {
   background-color: white;
   border-width: 1px;
   border-radius: 3px;
   margin: 1px;
 }
-.overover {
+.abv_gtabv_gt {
   background-color: rgb(105, 79, 16);
   border-width: 1px;
   color: white;
   border-radius: 3px;
   margin: 1px;
 }
-.underunder {
+.abv_ltabv_lt {
   background-color: rgb(105, 79, 16);
   border-width: 1px;
   color: white;
