@@ -7,6 +7,7 @@ import DetailBeerView from "./DetailViewPage";
 import SearchBar from "./SearcBar";
 import AbvSearch from "./AbvSearc";
 import PageButtons from "./PageButtons";
+import isANum from "./utils/isANum";
 
 const apiURL = "https://api.punkapi.com/v2/beers"; //after "/" put the id of the beer
 const numBeersPerPage: number = 24;
@@ -27,22 +28,19 @@ export default function MainPage(): JSX.Element {
   useEffect(() => {
     async function fetchData() {
       let link = `${apiURL}?page=${page}&per_page=${numBeersPerPage}`;
-      if (searchInput !== "" && abvInput === "" && abvBtn === null) {
+      if (searchInput !== "" && abvBtn === null) {
         link = `https://api.punkapi.com/v2/beers?beer_name=${searchInput}&per_page=${numBeersPerPage}&page=${page}`;
-      } else if (abvInput !== "" && abvBtn !== null && searchInput === "") {
+      } else if (abvBtn !== null && searchInput === "") {
         link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&per_page=${numBeersPerPage}&page=${page}`;
-      } else if (abvInput !== "" && abvBtn !== null && searchInput !== "") {
+      } else if (abvBtn !== null && searchInput !== "") {
         link = `https://api.punkapi.com/v2/beers?${abvBtn}=${abvInput}&beer_name=${searchInput}&per_page=${numBeersPerPage}&page=${page}`;
       }
-      console.log(link);
       const response = await fetch(link);
       const data = await response.json();
       setAllBeers(data);
     }
     fetchData();
   }, [page, searchInput, abvBtn, abvInput]);
-
-  console.log("all mi beers: ", allBeers.length, "\n");
 
   //--------------------------------------------------page setting
   const handleNextPage = () => {
@@ -55,7 +53,7 @@ export default function MainPage(): JSX.Element {
   //--------------------------------------------------filter beers depending on their ABV
   const handleAbvSearchInput = (input: string) => {
     setAbvInput(input);
-    if (input === "") {
+    if (input === "" || !isANum(input)) {
       setAbvBtn(null);
     }
   };

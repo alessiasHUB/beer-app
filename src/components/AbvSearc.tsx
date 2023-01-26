@@ -19,6 +19,13 @@ export default function AbvSearch(props: AbvSearchProps): JSX.Element {
     setPageOnChange,
   } = props;
 
+  // check if the previous_value was a NUMBER and the
+  // current_value is an EMPTY STRING => setPageOnChange();
+  const maybeSetPageOnChange = (input: string): void => {
+    if (isANum(input)) {
+      setPageOnChange();
+    }
+  };
   return (
     <div className="abv-search">
       <input
@@ -26,7 +33,7 @@ export default function AbvSearch(props: AbvSearchProps): JSX.Element {
         value={searchQuery}
         onChange={(e) => {
           onChange(e.target.value);
-          setPageOnChange();
+          maybeSetPageOnChange(searchQuery);
         }}
       />
       {!isANum(searchQuery) || searchQuery === "" ? (
