@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { IBeer } from "./utils/interfaces";
-// import { searchCriteriaBeers } from "./utils/searchCriteria";
-// import { searchAbvBeers } from "./utils/abvSearc";
 import BeerView from "./BeerView";
 import DetailBeerView from "./DetailViewPage";
 import SearchBar from "./SearcBar";
@@ -9,10 +7,12 @@ import AbvSearch from "./AbvSearc";
 import PageButtons from "./PageButtons";
 import isANum from "./utils/isANum";
 
+// todo: fetch one extra beer for pages that have 24,
+//       to see if you're on the final page
+// todo: "navigator" error in localhost:3000
+
 const apiURL = "https://api.punkapi.com/v2/beers"; //after "/" put the id of the beer
 const numBeersPerPage: number = 24;
-
-// const totalPages: number = 13; //if 25 beers per page
 
 export default function MainPage(): JSX.Element {
   const [allBeers, setAllBeers] = useState<IBeer[]>([]);
